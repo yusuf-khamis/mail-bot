@@ -1,0 +1,31 @@
+group 'my_bot'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'HomeController'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'redis.clients', name: 'jedis', version: '1.5.0'
+    compile group: 'javax.mail', name: 'mail', version: '1.4.1'
+    compile 'com.google.api-client:google-api-client:1.22.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.22.0'
+    compile 'com.google.apis:google-api-services-gmail:v1-rev64-1.22.0'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'HomeController'
+    }
+    baseName = 'my bot'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } } //with jar
+}
